@@ -9,11 +9,18 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+
+//plugin 
+import { AdMobFree } from '@ionic-native/admob-free';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener';
+
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage
+    // HomePage,
+    // ListPage
   ],
   imports: [
     BrowserModule,
@@ -22,13 +29,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage
+    // HomePage,
+    // ListPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AdMobFree,
+    AndroidPermissions,
+    File,
+    FileOpener
   ]
 })
 export class AppModule {}

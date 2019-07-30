@@ -1,0 +1,31 @@
+page-message-details {
+    .custom-content{
+        .custom-item{
+            .item-mainDiv{
+                padding: 2vw 0;
+                border-bottom: 1px solid #dedcdc;
+                .sub-div-one{
+                    padding: 1vw 0;
+                    font-size: 15px;
+                    font-weight: 500;
+                    letter-spacing: 1px;
+                }
+                .sub-div-two{
+                    font-size: 13px;
+                    font-weight: 500;
+                    letter-spacing: 1px;
+                }
+            }
+            .item-content-maindiv{
+                padding: 2vw 0;
+                .item-content-subdiv{
+                    white-space: normal;
+                    font-size: 16px;
+                    font-weight: 400;
+                    letter-spacing: 0.6px;
+                    line-height: 1.5;
+                }
+            }
+        }
+    }
+}

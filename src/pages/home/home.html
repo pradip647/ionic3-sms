@@ -1,18 +1,59 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
+    <div class="header-custom-div">
+        <div class="header-sub-div-one">
+            <div class="div-one">
+              <ion-buttons start menuToggle>
+                <button  ion-button icon-only>
+                    <ion-icon name="md-menu"></ion-icon>
+                </button>
+              </ion-buttons>
+            </div>
+            <div class="div-two">
+              {{headerTitle ? headerTitle + ' message' : ''}}
+                <!-- Unread message -->
+            </div>
+        </div>
+
+        <div class="header-sub-div-two">
+            <div class="div-one">
+                <ion-avatar item-start>
+                    <img class="header-img" src="./assets/imgs/profile.jpg"> 
+                </ion-avatar>
+            </div>
+        </div>
+    </div>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content padding class="custom-content">
+    <div class="no-msg-div" *ngIf="allUnreadMSG?.length == 0 && showloading==false">
+        <div class="msg-sub">
+          <h4 class="msg-title">No message found</h4>
+        </div>
+    </div>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+    <ion-list *ngIf="allUnreadMSG?.length != 0 && showloading==false" class="custom-list">
+      <ion-item no-padding no-lines class="custom-item" *ngFor="let message of allUnreadMSG; let i=index;" (click)="gotoMsgDetails(message)">
+        <ion-avatar item-start (click)="markFunc(i,$event)">
+           <img src="./assets/imgs/mark.svg" *ngIf="message?.itemMark == true"> 
+          <div class="avt-div" *ngIf="message?.itemMark != true">{{message.address| slice:0:2}}</div>
+        </ion-avatar>
+        <h3 class="title-one">{{message.address}}</h3>
+        <h6 class="title-two">{{message.body | slice:0:60}}{{message.body?.length >60 ? '...' : ''}}</h6>
+      </ion-item>
+    </ion-list>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+    <ion-infinite-scroll (ionInfinite)="clickInfiniteScroll($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    
+
+  
+
+    <div *ngIf="showloading==true" class="custom-loading">
+      <img class="custom-img" src="../../assets/imgs/loading.svg" >
+    </div>
+
 </ion-content>
+

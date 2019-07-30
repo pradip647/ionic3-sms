@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end >
+      <button  ion-button icon-only>
+          <ion-icon name="md-trash"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end  (click)="printFunc()">
+      <button  ion-button icon-only>
+          <!-- <ion-icon name="md-more"></ion-icon> -->
+          <ion-icon name="md-print"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="custom-content">
+  <ion-item no-lines class="custom-item">
+    <div class="item-mainDiv">
+      <div class="sub-div-one">{{messageDetails?.address}}</div>
+      <div class="sub-div-two">{{messageDetails?.date_sent | date :'short' }}</div>
+    </div>
+
+    <div class="item-content-maindiv">
+        <div class="item-content-subdiv" >{{messageDetails?.body}}</div>
+      </div>
+  </ion-item>
+</ion-content>

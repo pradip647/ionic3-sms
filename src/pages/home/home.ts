@@ -63,10 +63,15 @@ export class HomePage {
     }
 
     if(this.platform.is('cordova')){
-      this.prepareAllAds()
       this.ReadListSMS();
     }
 
+  }
+
+  ionViewWillEnter(){
+    if(this.platform.is('cordova')){
+      this.prepareAllAds()
+    }
   }
 
   
@@ -78,12 +83,13 @@ export class HomePage {
       const bannerConfig: AdMobFreeBannerConfig = {
         // id:'ca-app-pub-4296647029451731/1077251173',
         id:'ca-app-pub-4296647029451731/1773687885',
-        isTesting: false,
+        // isTesting: false,
         autoShow: true,
        };
       
       this.admobFree.banner.config(bannerConfig);
       this.admobFree.banner.prepare().then(() => {
+        console.log("Home screen : Banner ad prepare successfull")
         this.admobFree.banner.show();
       }).catch(e => console.log(e));
     });
@@ -130,7 +136,7 @@ export class HomePage {
             }
             setTimeout(() => {
               this.lastvalueCount = lastcount+10;
-              if(infiniteScroll == null){ this.showloading = false; }else{infiniteScroll.complete()}
+              if(infiniteScroll == null){ this.zone.run(()=>{this.showloading = false;}) }else{infiniteScroll.complete()}
             }, 2000);
             
           // this.deleteSMS(data)
@@ -167,9 +173,10 @@ export class HomePage {
 
   /* IonViewWillLeave function */
   ionViewWillLeave(){
-    // if(this.platform.is('cordova')){
+    if(this.platform.is('cordova')){
     //   this.stopWatchSMS();
-    // }
+      this.admobFree.banner.hide();
+    }
     
   }
 

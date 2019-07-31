@@ -7,6 +7,7 @@ import { File } from '@ionic-native/file';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { FileOpener } from '@ionic-native/file-opener';
+import { AdMobFree, AdMobFreeBannerConfig,AdMobFreeRewardVideoConfig } from '@ionic-native/admob-free';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -28,9 +29,62 @@ export class MessageDetailsPage {
     private file: File,
     public plt:Platform,
     private fileOpener: FileOpener,
-    public loadingCtrl:LoadingController
+    public loadingCtrl:LoadingController,
+    private admobFree: AdMobFree,
   ) {
     this.messageDetails = this.navParams.get('details');
+  }
+
+  ionViewWillEnter(){
+    if(this.platform.is('cordova')){
+      this.prepareAllAds();
+      this.rewardAd();
+    }
+  }
+
+  /* GOOGLE AD-MOB Implementtion */
+  // ca-app-pub-4296647029451731~4583992167
+  prepareAllAds(){
+    this.platform.ready().then(() => {  
+      const bannerConfig: AdMobFreeBannerConfig = {
+        // id:'ca-app-pub-4296647029451731/1077251173',
+        id:'ca-app-pub-4296647029451731/1773687885',
+        // isTesting: false,
+        autoShow: true,
+       };
+      
+      this.admobFree.banner.config(bannerConfig);
+      this.admobFree.banner.prepare().then(() => {
+        console.log("Details screen : Banner ad prepare successfull");
+        this.admobFree.banner.show();
+      }).catch(e => console.log(e));
+    });
+  }
+
+  rewardAd(){
+    this.platform.ready().then(() => {  
+      const rewardConfig: AdMobFreeRewardVideoConfig = {
+        id:'ca-app-pub-4296647029451731/9952836512',
+        // isTesting: false,
+        autoShow: true,
+       };
+      
+      this.admobFree.rewardVideo.config(rewardConfig);
+      this.admobFree.rewardVideo.prepare().then(() => {
+        console.log("Details screen : Reward video ad prepare successfull");
+        this.admobFree.rewardVideo.show();
+      }).catch(e => console.log(e));
+    });
+  }
+  /* GOOGLE AD-MOB Implementation */
+
+  /* IonViewWillLeave function */
+  ionViewWillLeave(){
+    if(this.platform.is('cordova')){
+    //   this.stopWatchSMS();
+      this.admobFree.banner.hide();
+    }
+    
   }
 
   showLoading() {
